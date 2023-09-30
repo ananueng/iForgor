@@ -1,6 +1,6 @@
 ### HTML, CSS, SQL ###
 # 484 #
-rsync -rtv --delete --exclude '.git*' --filter=':- .gitignore' ./ ananueng@login-course.engin.umich.edu:eecs/484/p1-fakebook-db
+rsync -rtv --delete --exclude '.git*' --filter=':- .gitignore' ./ ananueng@login-course.engin.umich.edu:eecs/484/hw2
 ssh ananueng@login.engin.umich.edu
 rlwrap sqlplus
 SELECT table_name FROM user_tables;
@@ -19,6 +19,8 @@ ssh -i eecs485deploy.pem ubuntu@ec2-13-58-43-15.us-east-2.compute.amazonaws.com
 python3 -c 'import os; print(os.urandom(24))'
 lsof -ti :8000 | xargs kill
 url_for('fxn', key=value)		->		endpoint_of_fxn/?key=value or endpoint_of_fxn/<key>
+sha512sum --check <.txt>
+sha512sum <.txt> > output
 
 
 ### Python ###
@@ -52,3 +54,4 @@ tar \
   sql \
   deployed_insta485.html \
   deployed_insta485.log
+
