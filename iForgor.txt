@@ -1,8 +1,67 @@
+## CHEPS ##
+go to LOCAL venv VSCode with pandas, then execute use that VSCode powershell with absolute paths
+cd "Z:\Provider Scheduling\Block Scheduling\Tools\WIP\WIP-anan\2024-25 IM Jeopardy and Night Schedule\Prohibition Generator\Python File"
+python .\JeopardyRequestsAllAnanEsha.py
+
+## BIOINF 529 ##
+ln -s /nfs/turbo/dcmb-class/bioinf529/sec001/ananueng/ /home/ananueng/bioinf529
+cp /nfs/turbo/dcmb-class/bioinf529/sec001/shared/class_files/class04.tgz .
+cp ~/scratch/class06.tgz .
+echo "module load python3.9-anaconda" >> ~/.bashrc
+source ~/.bashrc
+
+conda init bash
+conda config --add channels bioconda
+conda config --add channels conda-forge
+conda config --show channels 			# Check channels
+conda config --set always_yes true
+echo "conda deactivate" >> ~/.bashrc		# To use with the Great Lakes virtual desktop
+conda create -n b529 python=3.9 numpy pandas scipy matplotlib jupyter jupyterlab
+conda info --envs				# Check conda env that are discoverable
+conda env remove --name <env name>
+conda install ...				# Same as pip install, activate first!
+conda list					# Check packages installed
+conda rename -n old_name  new_name 
+cd /nfs/turbo/dcmb-class/bioinf529/sec001/ananueng
+(module load python3.9-anaconda)
+conda activate b529
+
+gunzip .fa.gz 					# tar only for .tar.gz
+
+
+
+## 482 ##
+module load gcc/12.2.1
+g++ -g3 main.cpp # compile debugger exe with -g/-g3
+gdb ./main.exe
+
+gdb> break foo.cpp:25 | main() | 25 | Class::bar	# ONE COLON
+i [b | thr]
+[dis | en | del] n 					# breakpoint n
+[s | n | c] n						# step into | step over | continue n times
+ls /var/lib/systemd/coredump
+cond n (i >= 4)						# condition on breakpoint n
+
+# core dumping
+ulimit -c unlimited
+/mnt/wslg/dumps/
+gdb ./main -c /mnt/wslg/dumps/core.main
+bt full
+
+ctrl+shift+p -> C/C++: Edit Configurations (JSON) -> c_cpp_properties.json
+
+nc -lp 44444
+echo -e "\t test" | nc localhost 44444
+// TODO: Fuzzers (random input)
+// TODO: Line coverage tools, gcov in gcc
+
+
 ### HTML, CSS, SQL ###
-# 484 #
-rsync -rtv --delete --exclude '.git*' --filter=':- .gitignore' ./ ananueng@login-course.engin.umich.edu:eecs/484/hw2
+## 484 ##
+rsync -rtv --delete --include 'Makefile' --exclude '.git*' --filter=':- .gitignore' ./ ananueng@login-course.engin.umich.edu:eecs/484/p3-mongodb
+rsync -rtv --delete --include 'Makefile' --exclude '.git*' ./ ananueng@login-course.engin.umich.edu:eecs/484/p3-mongodb
 ssh ananueng@login.engin.umich.edu
-rlwrap sqlplus
+ 
 SELECT table_name FROM user_tables;
 DESC <table name>;
 set markup csv on;
@@ -13,28 +72,84 @@ MINUS SELECT * FROM View_Photo_Information;
 SELECT * FROM View_Photo_Information
 MINUS SELECT * FROM project1.Public_Photo_Information;
 
-# 485 #
+rlwrap sqlplus
+make loginmongo
+
+## 485 ##
+brew install asciiquarium (IOS)
+apt get install asciiquarium | lolcat
 sqlite3 var/insta485.sqlite3 "SELECT * FROM users;"
 ssh -i eecs485deploy.pem ubuntu@ec2-13-58-43-15.us-east-2.compute.amazonaws.com
 python3 -c 'import os; print(os.urandom(24))'
 lsof -ti :8000 | xargs kill
-url_for('fxn', key=value)		->		endpoint_of_fxn/?key=value or endpoint_of_fxn/<key>
+url_for('fxn', key=value)		->		endpoint_of_fxn/?key=value || endpoint_of_fxn/<key>
 sha512sum --check <.txt>
 sha512sum <.txt> > output
 
+npx cypress open
+cy.pause()
+it()/it.only()
+describe()/describe.only()
 
-### Python ###
+madoop \
+    -input tests/testdata/input_small \
+    -output output \
+    -mapper tests/testdata/exec/wc_map.py \
+    -reducer tests/testdata/exec/wc_reduce.py
+head output/part-0000*
+
+INDEX_PATH=inverted_index_0.txt flask --app index run --host 0.0.0.0 --port 9000 &
+INDEX_PATH=inverted_index_1.txt flask --app index run --host 0.0.0.0 --port 9001 &
+INDEX_PATH=inverted_index_2.txt flask --app index run --host 0.0.0.0 --port 9002 &
+
+wget --random-wait -r -p -e robots=off cse.engin.umich.edu
+
+### Python ### notes: python3 3.10.12 on wsl, python 3.12 on windows powershell
 python3 -m venv env
+python3 -m venv path/to/env
 source env/bin/activate
+py -m venv env 			#powershell
+source .\myenv\Scripts\Activate.ps1	#powershell
+
+
 pip install -r requirements.txt
+
+## threads and sockets
+ps -ax 		# processes
+ps -axM		# processes and sockets
+pgrep -af python
+
+pylint *.py
+pycodestyle *.py
+pydocstyle *.py
 
 
 ### Git ###
 ssh-keygen -t ed25519 -C ananueng@umich.edu
 cat ~/.ssh/id_ed25519.pub
+git update-index --skip-worktree <path to file to untrack after adding to gitignore>
+
+git checkout hash-id			# bring to old commit
+git checkout -b new-branch-name
+git checkout branch-name 		# switch branch
+
 
 git clean -xdi
 
+rm -rf .git/ .gitignore
+ls -A
+wget https://eecs485staff.github.io/p1-insta485-static/dot_gitignore_sample -O .gitignore
+wget https://eecs280staff.github.io/tutorials/dot_gitignore_sample -O .gitignore
+git init
+git checkout -b main
+git status
+git add .
+git commit -m "Initial commit"
+git remote add origin git@github.com:eecs482/ananueng.1.git
+git remote -v
+git push -u origin main
+
+git checkout -b newbranch		# make new branch, then make rebase request to move head?
 ### Shellscript ###
 #!/bin/bash
 
@@ -46,6 +161,7 @@ chmod +x
 
 
 ### EECS Projects ###
+#P2#
 tar \
   --exclude '*__pycache__*' \
   -czvf submit.tar.gz \
@@ -54,4 +170,89 @@ tar \
   sql \
   deployed_insta485.html \
   deployed_insta485.log
+
+#P3#
+tar \
+  --exclude '*__pycache__*' \
+  -czvf submit.tar.gz \
+  bin \
+  insta485 \
+  package-lock.json \
+  package.json \
+  sql \
+  webpack.config.js \
+  deployed_index.html \
+  deployed_index.log \
+  deployed_bundle.js \
+  deployed_bundle.log
+
+#P4#
+tar \
+  --exclude '*__pycache__*' \
+  --exclude '*tmp*' \
+  -czvf submit.tar.gz \
+  GAI.md \
+  bin \
+  mapreduce
+
+mapreduce-manager &
+mapreduce-worker --port 6001 &
+mapreduce-worker --port 6002 &
+mapreduce-manager --loglevel=DEBUG
+mapreduce-worker --loglevel=DEBUG
+pgrep -af mapreduce-
+pgrep -f mapreduce-manager
+pkill -f mapreduce-
+
+mapreduce-submit
+mapreduce-submit --shutdown
+tail -F var/log/manager.log
+
+mapreduce-submit \
+    --input tests/testdata/input_small \
+    --output output \
+    --mapper tests/testdata/exec/wc_map.sh \
+    --reducer tests/testdata/exec/wc_reduce.sh \
+    --nmappers 2 \
+    --nreducers 2
+
+pytest -vvsx --log-cli-level=DEBUG tests/test_manager_00.py::test_shutdown
+pytest -vvsx --log-cli-level=DEBUG tests/test_manager_00.py::test_shutdown_workers
+pytest -vvsx --log-cli-level=DEBUG tests/test_worker_01.py
+
+pytest -vvsx --log-cli-level=DEBUG tests/test_manager_01.py
+
+pytest -vvsx --log-cli-level=DEBUG tests/test_manager_02.py 
+
+pytest -vvsx --log-cli-level=DEBUG tests/test_worker_03.py
+pytest -vvsx --log-cli-level=DEBUG tests/test_worker_04.py
+pytest -vvsx --log-cli-level=DEBUG tests/test_worker_05.py
+
+pytest -vvsx --log-cli-level=DEBUG tests/test_worker_07.py
+pytest -vvsx --log-cli-level=DEBUG tests/test_worker_08.py
+
+pytest -vvsx --log-cli-level=DEBUG tests/test_manager_03.py
+
+pytest -vvsx --log-cli-level=DEBUG tests/test_manager_05.py
+
+# not in specs
+pytest -vvsx --log-cli-level=DEBUG tests/test_worker_11.py
+pytest -vvsx --log-cli-level=DEBUG tests/test_integration_00.py
+pytest -vvsx --log-cli-level=DEBUG tests/test_integration_01.py
+pytest -vvsx --log-cli-level=DEBUG tests/test_integration_02.py
+
+
+### VSCode ###
+Ctrl + D
+Ctrl + Shift + L
+Shift + Home/End
+Alt <--|-->
+Alt + Z
+Alt + Shift + up|down
+Ctrl + Alt + up|down
+
+### other ###
+head -n -1 foo.txt > temp.txt ; mv temp.txt foo.txt 		# rm last line
+
+
 
