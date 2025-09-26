@@ -2,6 +2,7 @@
 go to LOCAL venv VSCode with pandas, then execute use that VSCode powershell with absolute paths
 cd "Z:\Provider Scheduling\Block Scheduling\Tools\WIP\WIP-anan\2024-25 IM Jeopardy and Night Schedule\Prohibition Generator\Python File"
 python .\JeopardyRequestsAllAnanEsha.py
+cd C:\Users\ananueng\Documents\venv\Scripts\
 
 ## BIOINF 529 ##
 ln -s /nfs/turbo/dcmb-class/bioinf529/sec001/ananueng/ /home/ananueng/bioinf529
@@ -253,6 +254,7 @@ Ctrl + Alt + up|down
 
 ### other ###
 head -n -1 foo.txt > temp.txt ; mv temp.txt foo.txt 		# rm last line
+
 
 
 
