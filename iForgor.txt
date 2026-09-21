@@ -126,6 +126,9 @@ pydocstyle *.py
 
 
 ### Git ###
+
+git branch -vv | grep ": gone]" | awk '{print $1}' | xargs git branch -D  # clean all local branches that don't have a remote counterpart
+
 ssh-keygen -t ed25519 -C ananueng@umich.edu
 cat ~/.ssh/id_ed25519.pub
 git update-index --skip-worktree <path to file to untrack after adding to gitignore>
